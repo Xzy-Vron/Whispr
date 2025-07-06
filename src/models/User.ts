@@ -21,7 +21,7 @@ export interface User extends Document {
     username : string,
     password : string,
     email : string,
-    verifycode : string,
+    verifyCode : string,
     verifyCodeExpire : Date,
     isVerified : boolean,
     isMessageAccepted : boolean,
@@ -46,7 +46,7 @@ const userSchema: Schema<User> = new Schema({
         unique:true,
         match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,"Please provide a valid email"]
     },
-    verifycode : {
+    verifyCode : {
         type: String,
         required: [true,"Verify code is required"]
     },
