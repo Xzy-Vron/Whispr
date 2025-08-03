@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       return Response.json(
         {
           success: false,
-          message: "User already exists",
+          message: "Username already exists",
         },
         {
           status: 400,
