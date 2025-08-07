@@ -57,7 +57,7 @@ export async function POST(request: Request) {
       const expiryDate = new Date();
       expiryDate.setHours(expiryDate.getHours() + 1);
 
-      const newUser = await new User({
+      const newUser = new User({
         username,
         password: hashedPassword,
         email,
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
         isAcceptingMessage: true,
         messages: [],
       });
-      newUser.save();
+      await newUser.save();
     }
     // Sending Verification Email
 

@@ -23,13 +23,13 @@ export async function GET(request: Request) {
     console.log(parsed);
 
     if (!parsed.success) {
-      const usernameErrors = parsed.error.format()._errors || [];
+      const usernameErrors = parsed.error.format().username?._errors || [];
       return Response.json(
         {
           success: false,
           message:
             usernameErrors.length > 0
-              ? usernameErrors.join(", ")
+              ? usernameErrors[usernameErrors.length -1]
               : "Invalid username",
         },
         {

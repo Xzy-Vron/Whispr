@@ -15,6 +15,7 @@ import { EmailResponse } from "@/types/emailResponse";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -80,19 +81,25 @@ export default function page() {
     setIsSubmitting(true);
     try {
       const promise = axios.post<EmailResponse>("/api/sign-up", data);
+      
+
+      toast.promise(promise, {
+        loading: "Signing up...",
+        success: (res) => {
+          return res.data.message;
+        },
+        error: (res) => {
+          return res.data.message;
+        },
+      });
+
       const response = promise.then((res) => {
         return res.data;
       });
 
-      toast.promise(response, {
-        loading: "Signing up...",
-        success: (res) => {
-          return res.message;
-        },
-        error: (res) => res.message,
-      });
-
-      router.replace(`/verify-${username}`);
+      setTimeout(() => {
+        router.replace(`/verify-${username}`);
+      }, 4000);
     } catch (error) {
       console.log(error);
       toast.error("Error signing up");
@@ -125,6 +132,7 @@ export default function page() {
                     <FormLabel>Username</FormLabel>
                     <FormControl>
                       <Input
+                        autoComplete="off"
                         placeholder="John_Doe"
                         {...field}
                         onChange={(e) => {
@@ -133,6 +141,12 @@ export default function page() {
                         }}
                       />
                     </FormControl>
+                    <div className="h-0 flex justify-end">
+                    {isCheckingUsername && <Loader size={14} className="animate-spin" />}
+                    <p className={`text-[11.5px]  ${usernameMessage === "Username is valid" ? "text-green-500" : "text-red-500"}`}>
+                      {username && usernameMessage}
+                    </p>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -145,6 +159,7 @@ export default function page() {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
+                        autoComplete="off"
                         type="email"
                         placeholder="John@example.com"
                         {...field}
@@ -161,7 +176,7 @@ export default function page() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="•••••••" {...field} />
+                      <Input type="password" placeholder="••••••" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
