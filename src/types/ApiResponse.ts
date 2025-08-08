@@ -1,5 +1,5 @@
 import { Message } from "@/models/User";
-export interface EmailResponse {
+export interface ApiResponse {
     success: boolean;
     message: string;
     isAcceptingMessages?: boolean;

@@ -10,11 +10,9 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { signUpSchema } from "@/schemas/signUp";
 import axios, { AxiosError } from "axios";
-import { NextApiResponse } from "next";
-import { EmailResponse } from "@/types/emailResponse";
+import { ApiResponse } from "@/types/ApiResponse";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Loader } from "lucide-react";
 import {
   Form,
@@ -65,7 +63,7 @@ export default function page() {
           );
           setUsernameMessage(response.data.message);
         } catch (error: any) {
-          const axiosError = error as AxiosError<EmailResponse>;
+          const axiosError = error as AxiosError<ApiResponse>;
           setUsernameMessage(
             axiosError.response?.data.message ?? "Error checking username"
           );
@@ -80,7 +78,7 @@ export default function page() {
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true);
     try {
-      const promise = axios.post<EmailResponse>("/api/sign-up", data);
+      const promise = axios.post<ApiResponse>("/api/sign-up", data);
       
 
       toast.promise(promise, {
@@ -102,7 +100,12 @@ export default function page() {
       }, 4000);
     } catch (error) {
       console.log(error);
-      toast.error("Error signing up");
+      const axiosError = error as AxiosError<ApiResponse>;
+      
+      toast("Error signing up",{
+        description : axiosError.response?.data.message
+      });
+
     } finally {
       setIsSubmitting(false);
     }
