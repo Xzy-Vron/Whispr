@@ -43,6 +43,7 @@ export async function GET(req: Request) {
     return Response.json(
       {
         success: true,
+        message: "Messages fetched successfully",
         messages: user[0].messages,
       },
       { status: 200 }

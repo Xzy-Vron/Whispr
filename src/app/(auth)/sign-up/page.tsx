@@ -114,7 +114,6 @@ export default function page() {
   return (
     <>
     <div className="h-screen flex justify-center items-center">
-
       <Card className="w-full max-w-sm rounded-md ">
         <CardHeader>
           <CardTitle>Whispr</CardTitle>

@@ -24,12 +24,12 @@ export async function POST(req: Request) {
   }
   
   const userId = user._id;
-  const { acceptMessage } = await req.json();
+  const { acceptMessages } = await req.json();
 
   try {
     const updatedUser = await User.findOneAndUpdate(
       { _id: userId },
-      { isAcceptingMessage: acceptMessage },
+      { isAcceptingMessage: acceptMessages },
       { new: true }
     );
 
