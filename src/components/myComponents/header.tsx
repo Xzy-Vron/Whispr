@@ -48,7 +48,7 @@ export function Header() {
           </div>
           <span>Whispr</span>
         </div>
-        <nav className="hidden md:flex gap-8">
+        {/* <nav className="hidden md:flex gap-8">
           <Link
             href="#features"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
@@ -73,7 +73,7 @@ export function Header() {
           >
             FAQ
           </Link>
-        </nav>
+        </nav> */}
         <div className="hidden md:flex gap-4 items-center">
           <Button
             variant="ghost"
@@ -147,7 +147,7 @@ export function Header() {
           className="md:hidden absolute top-16 inset-x-0 bg-background/95 backdrop-blur-lg border-b"
         >
           <div className="container py-4 flex flex-col gap-4">
-            <Link
+            {/* <Link
               href="#features"
               className="py-2 text-sm font-medium"
               onClick={() => setMobileMenuOpen(false)}
@@ -174,25 +174,28 @@ export function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               FAQ
-            </Link>
+            </Link> */}
             <div className="flex flex-col gap-2 pt-2 border-t">
               {session ? (
-            <Button  className="rounded-full">
+            <Button  className="rounded-full" onClick={() => signOut()}>
               Logout
             </Button>
           ) : (
             <>
+            <Link href={"/sign-in"}>
               <Button
-               
                 variant="ghost"
                 className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
                 Log in
               </Button>
+            </Link>
+            <Link href={"/sign-up"}>
               <Button  className="rounded-full">
                 Get Started
                 <ChevronRight className="ml-1 size-4" />
               </Button>
+            </Link>
             </>
           )}
             </div>

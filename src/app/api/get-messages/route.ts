@@ -34,10 +34,11 @@ export async function GET(req: Request) {
     if (!user || user.length == 0) {
       return Response.json(
         {
-          success: false,
-          message: "User not found",
+          success: true,
+          message: "No messages found",
+          messages: [],
         },
-        { status: 401 }
+        { status: 200 }
       );
     }
     return Response.json(

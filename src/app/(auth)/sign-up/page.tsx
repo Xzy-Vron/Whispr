@@ -96,7 +96,7 @@ export default function page() {
       });
 
       setTimeout(() => {
-        router.replace(`/verify-${username}`);
+        router.replace(`/verify/${username}`);
       }, 4000);
     } catch (error) {
       console.log(error);

@@ -4,7 +4,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import { User as NextAuthUser } from "next-auth";
 
-
 export async function POST(req: Request) {
   await dbconnect();
 
@@ -22,11 +21,35 @@ export async function POST(req: Request) {
       }
     );
   }
-  
+
   const userId = user._id;
   const { acceptMessages } = await req.json();
 
   try {
+    const foundUser = await User.findOne({ _id: userId });
+    if (!foundUser) {
+      return Response.json(
+        {
+          success: false,
+          message: "User not found",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
+    if (foundUser.isAcceptingMessage === acceptMessages) {
+      return Response.json(
+        {
+          success: true,
+          message: "User status is already updated",
+        },
+        {
+          status: 200,
+        }
+      );
+    }
     const updatedUser = await User.findOneAndUpdate(
       { _id: userId },
       { isAcceptingMessage: acceptMessages },
@@ -38,7 +61,7 @@ export async function POST(req: Request) {
         {
           success: false,
           message: "failed to update user status to accepting messages",
-          updatedUser
+          updatedUser,
         },
         {
           status: 401,
@@ -56,12 +79,12 @@ export async function POST(req: Request) {
       }
     );
   } catch (error) {
-    console.log("failed to update user status to accepting messages", error);
+    console.log("Error updating user status", error);
 
     return Response.json(
       {
         success: false,
-        message: "failed to update user status to accepting messages",
+        message: "Error updating user status",
       },
       {
         status: 500,
@@ -87,28 +110,28 @@ export async function GET(req: Request) {
       }
     );
   }
-  
+
   const userId = user._id;
-  
+
   try {
     const foundUser = await User.findOne({ _id: userId });
-  
+
     if (!foundUser) {
       return Response.json(
         {
           success: false,
           message: "User not found",
         },
-        {status: 404}
+        { status: 404 }
       );
     }
-  
+
     return Response.json(
       {
         success: true,
         isAcceptingMessage: foundUser.isAcceptingMessage,
       },
-      {status: 200}
+      { status: 200 }
     );
   } catch (error) {
     console.log("Error in getting message acceptance status", error);

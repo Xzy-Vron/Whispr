@@ -38,11 +38,20 @@ export default function MessageCard({ message, onMessageDelete }: messageCardPro
     onMessageDelete(message._id);
   }
   
+      const options = {
+        timeZone: "Asia/Kolkata",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardTitle>{message.content}</CardTitle>
+        <CardDescription>{message.createdAt.toLocaleString("en-IN")}</CardDescription>
         <CardAction>
           <AlertDialog>
       <AlertDialogTrigger asChild>

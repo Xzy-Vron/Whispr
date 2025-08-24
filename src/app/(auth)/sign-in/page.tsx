@@ -99,7 +99,7 @@ export default function page() {
                     <FormControl>
                       <Input
                         autoComplete="off"
-                        type="email"
+                        type="text"
                         placeholder=""
                         {...field}
                       />
