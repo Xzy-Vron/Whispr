@@ -1,8 +1,7 @@
 import dbconnect from "@/lib/dbConnect";
 import User from "@/models/User";
-import { getServerSession } from "next-auth";
+import { getServerSession, User as NextAuthUser } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
-import { User as NextAuthUser } from "next-auth";
 import mongoose from "mongoose";
 
 export async function GET(req: Request) {
@@ -26,12 +25,13 @@ export async function GET(req: Request) {
   const userId = new mongoose.Types.ObjectId(user._id);
   try {
     const user = await User.aggregate([
-      { $match: { id: userId } },
+      { $match: { _id: userId } },
       { $unwind: "$messages" },
       { $sort: { "messages.createdAt": -1 } },
       { $group: { _id: "$_id", messages: { $push: "$messages" } } },
     ]);
-    if (!user || user.length == 0) {
+
+    if (!user || user.length === 0) {
       return Response.json(
         {
           success: true,
@@ -41,11 +41,12 @@ export async function GET(req: Request) {
         { status: 200 }
       );
     }
+
     return Response.json(
       {
         success: true,
         message: "Messages fetched successfully",
-        messages: user[0].messages,
+        messages: user[0].messages || [],
       },
       { status: 200 }
     );

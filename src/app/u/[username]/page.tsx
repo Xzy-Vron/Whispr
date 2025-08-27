@@ -52,6 +52,7 @@ export default function InputForm() {
             </pre>
           ),
         });
+        form.reset({content:""});
       }
     } catch (error) {
       console.log(error);
@@ -96,7 +97,7 @@ export default function InputForm() {
                 </FormItem>
               )}
             />
-            <Button className="w-full" type="submit">
+            <Button className="w-full cursor-pointer" type="submit">
               Submit Message
             </Button>
           </form>

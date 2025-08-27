@@ -25,9 +25,7 @@ export default function page() {
 
   const handleDeleteMessage = (messageId: string) => {
     setMessages(
-      messages.filter((message: Message) => {
-        message._id !== messageId;
-      })
+      messages.filter((message: Message) => message._id !== messageId)
     );
   };
   const { data: session } = useSession();
@@ -41,7 +39,7 @@ export default function page() {
   const acceptMessages = watch("acceptMessages");
 
   const fetchAcceptMessage = useCallback(async () => {
-    setIsLoading(true);
+    setIsSwitchLoading(true);
     try {
       const response = await axios.get("/api/accept-messages");
       if (response.data && response.data.isAcceptingMessage !== undefined) {
@@ -60,7 +58,7 @@ export default function page() {
           "Failed to fetch messages settings",
       });
     } finally {
-      setIsLoading(false);
+      setIsSwitchLoading(false);
     }
   }, [setValue]);
 
@@ -82,16 +80,10 @@ export default function page() {
           });
         }
         const response = await promise;
-        if (response.data && Array.isArray(response.data.messages)) {
-          setMessages(response.data.messages);
-        } else {
-          toast.error("Error fetching messages", {
-            description: "Invalid response data",
-          });
-        }
+        setMessages(response.data.messages || []);
+
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>;
-
         toast.error("Error accepting messages", {
           description:
             axiosError.response?.data.message || "Failed to fetch messages",
@@ -106,25 +98,18 @@ export default function page() {
 
   useEffect(() => {
     if (!session || !session?.user) return;
-    fetchAcceptMessage();
     fetchMessage();
-  }, [session, fetchAcceptMessage, fetchMessage]);
+    fetchAcceptMessage();
+  }, [session, setValue, fetchAcceptMessage, fetchMessage]);
 
   const handleSwitchChange = async () => {
     try {
-      const promise = axios.post("/api/accept-messages", {
+      const response = await axios.post<ApiResponse>("/api/accept-messages", {
         acceptMessages: !acceptMessages,
       });
       setValue("acceptMessages", !acceptMessages);
-      toast.promise(promise, {
-        loading: "Accepting messages...",
-        success: (res) => {
-          return res.data.message;
-        },
-        error: (res) => {
-          return res.data.message;
-        },
-      });
+      toast.success(response.data.message);
+      
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       console.log('Error response:', axiosError.response);
@@ -136,7 +121,6 @@ export default function page() {
   };
 
   const username = session?.user?.username;
-  console.log('username', username);
 
   useEffect(() => {
     setBaseUrl(`${window.location.protocol}//${window.location.host}`);
@@ -181,13 +165,16 @@ export default function page() {
     <div className="mb-4">
       <Switch
         {...register("acceptMessages")}
-        onChange={handleSwitchChange}
+        checked={acceptMessages}
+        onCheckedChange={handleSwitchChange}
         disabled={isSwitchLoading}
       />
       <span className="ml-2">
-        {acceptMessages ? "Accepting messages" : "Not accepting messages"}
+        Accept Messages : 
+        {acceptMessages ? " ON" : " OFF"}
       </span>
     </div>
+
     <Separator />
 
     <Button
