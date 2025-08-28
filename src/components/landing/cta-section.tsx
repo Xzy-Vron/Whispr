@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export function CtaSection() {
   return (
@@ -27,7 +28,9 @@ export function CtaSection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Button size="lg" variant="secondary" className="rounded-full h-12 px-8 text-base">
-              Get Started Free →
+              <Link href="/sign-up">
+              Get Started Free
+              </Link>
               <ArrowRight className="ml-2 size-4" />
             </Button>
           </div>
