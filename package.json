@@ -17,6 +17,8 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-switch": "^1.2.6",
     "@react-email/components": "^0.1.1",
+    "@splinetool/react-spline": "^4.1.0",
+    "@splinetool/runtime": "^1.10.52",
     "ai": "^5.0.2",
     "axios": "^1.11.0",
     "bcrypt": "^6.0.0",
