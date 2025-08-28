@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { User } from "next-auth";
@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { ChevronRight, Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,6 +16,7 @@ export function Header() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  const pathname = usePathname();
   const { data: session } = useSession();
 
   const user: User = session?.user;
@@ -48,32 +50,34 @@ export function Header() {
           </div>
           <span>Whispr</span>
         </div>
-        {/* <nav className="hidden md:flex gap-8">
-          <Link
-            href="#features"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Features
-          </Link>
-          <Link
-            href="#testimonials"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Testimonials
-          </Link>
-          <Link
-            href="#pricing"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Pricing
-          </Link>
-          <Link
-            href="#faq"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            FAQ
-          </Link>
-        </nav> */}
+        {pathname === "/" && (
+          <nav className="hidden md:flex gap-20">
+            <Link
+              href="#features"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Features
+            </Link>
+            <Link
+              href="#testimonials"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Testimonials
+            </Link>
+            <Link
+              href="#pricing"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Pricing
+            </Link>
+            <Link
+              href="#faq"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              FAQ
+            </Link>
+          </nav>
+        )}
         <div className="hidden md:flex gap-4 items-center">
           <Button
             variant="ghost"
@@ -88,26 +92,26 @@ export function Header() {
             )}
             <span className="sr-only">Toggle theme</span>
           </Button>
-         {session ? (
-            <Button  className="rounded-full" onClick={() => signOut()}>
+          {session ? (
+            <Button className="rounded-full" onClick={() => signOut()}>
               Logout
             </Button>
           ) : (
             <>
-            <Link href={"/sign-in"}>
-              <Button
-                variant="ghost"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Log in
-              </Button>
-            </Link>
-            <Link href={"/sign-up"}>
-              <Button  className="rounded-full">
-                Get Started
-                <ChevronRight className="ml-1 size-4" />
-              </Button>
-            </Link>
+              <Link href={"/sign-in"}>
+                <Button
+                  variant="ghost"
+                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Log in
+                </Button>
+              </Link>
+              <Link href={"/sign-up"}>
+                <Button className="rounded-full">
+                  Get Started
+                  <ChevronRight className="ml-1 size-4" />
+                </Button>
+              </Link>
             </>
           )}
         </div>
@@ -177,27 +181,27 @@ export function Header() {
             </Link> */}
             <div className="flex flex-col gap-2 pt-2 border-t">
               {session ? (
-            <Button  className="rounded-full" onClick={() => signOut()}>
-              Logout
-            </Button>
-          ) : (
-            <>
-            <Link href={"/sign-in"}>
-              <Button
-                variant="ghost"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Log in
-              </Button>
-            </Link>
-            <Link href={"/sign-up"}>
-              <Button  className="rounded-full">
-                Get Started
-                <ChevronRight className="ml-1 size-4" />
-              </Button>
-            </Link>
-            </>
-          )}
+                <Button className="rounded-full" onClick={() => signOut()}>
+                  Logout
+                </Button>
+              ) : (
+                <>
+                  <Link href={"/sign-in"}>
+                    <Button
+                      variant="ghost"
+                      className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      Log in
+                    </Button>
+                  </Link>
+                  <Link href={"/sign-up"}>
+                    <Button className="rounded-full">
+                      Get Started
+                      <ChevronRight className="ml-1 size-4" />
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </motion.div>
