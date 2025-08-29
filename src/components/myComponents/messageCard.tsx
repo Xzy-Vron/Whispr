@@ -2,7 +2,6 @@ import React from "react";
 import {
   Card,
   CardAction,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -18,7 +17,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { MailX } from "lucide-react";
 import { Message } from "@/models/User";
@@ -26,57 +25,77 @@ import { toast } from "sonner";
 import axios from "axios";
 
 type messageCardProps = {
-  message : Message,
-  onMessageDelete : (messageId : any) => void
+  message: Message;
+  onMessageDelete: (messageId: any) => void;
 };
 
-export default function MessageCard({ message, onMessageDelete }: messageCardProps) {
-
+export default function MessageCard({
+  message,
+  onMessageDelete,
+}: messageCardProps) {
   const handleDeleteConfirm = async () => {
-    const response = await axios.delete(`/api/delete-message/${message._id}`);
-    toast.success("Deleted your Message successfully!");
+    const promise = axios.delete(`/api/delete-message/${message._id}`);
+    toast.promise(promise, {
+      loading: "Deleting message...",
+      success: (res) => {
+        return res.data.message;
+      },
+      error: (res) => {
+        return res.data.message;
+      },
+    });
     onMessageDelete(message._id);
-  }
-  
-      const options = {
-        timeZone: "Asia/Kolkata",
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      }
+  };
+
+  const options  = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+    timeZone: "Asia/Kolkata", // IST timezone
+  } as const;
+
+  const formatter = new Intl.DateTimeFormat("en-GB", options);
+  let formattedDate = formatter.format(new Date(message.createdAt));
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>{message.content}</CardTitle>
-        <CardDescription>{message.createdAt.toLocaleString("en-IN")}</CardDescription>
         <CardAction>
           <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="destructive">< MailX  size={15}/></Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            message.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={(() => handleDeleteConfirm())}>Continue</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive">
+                <MailX size={15} />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your message.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={() => handleDeleteConfirm()}>
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </CardAction>
       </CardHeader>
       {/* <CardContent>
-      </CardContent>
+      </CardContent> */}
       <CardFooter>
-      </CardFooter> */}
+        <CardDescription className="text-sm text-muted-foreground">
+          {formattedDate}
+        </CardDescription>
+      </CardFooter>
     </Card>
   );
 }

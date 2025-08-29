@@ -77,21 +77,21 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               <Link
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/avinash-ganore/"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Linkedin className="size-5" />
                 <span className="sr-only">Avinash's LinkedIn</span>
               </Link>
               <Link
-                href="https://twitter.com"
+                href="https://x.com/XzyVron"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Twitter className="size-5" />
                 <span className="sr-only">Avinash's Twitter</span>
               </Link>
               <Link
-                href="https://github.com"
+                href="https://github.com/Xzy-Vron"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Github className="size-5" />
