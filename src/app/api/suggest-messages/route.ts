@@ -1,13 +1,19 @@
-import { google } from "@ai-sdk/google";
 import { streamText } from "ai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+
+const google = createGoogleGenerativeAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
 export const config = {
   runtime: "edge",
 };
 
 export async function POST(req: Request) {
+  
   try {
     const { conversationContext } = await req.json();
+    console.log(conversationContext);
 
     const prompt =
       conversationContext && conversationContext.length > 0? 
@@ -15,33 +21,48 @@ export async function POST(req: Request) {
       
         Context: ${conversationContext}
 
-        Generate 3 short, engaging questions (max 20 words each) that would naturally continue this conversation.
+        Generate 3 short, engaging questions (max 20 words each) that would naturally continue the conversation context provided above (The questions should strictly be related to the context).
         These questions are for an anonymous social messaging platform, like Qooh.me and should be suitable for diverse audience. Avoid personal or sensitive topics, focusing instead on universal theme that engages friendly interaction.
+
+        for example your output should be structured like this: 
+        What's a hobby you have recently started? ||
+        If you could have any superpower, what would it be? ||
+        What's a simple thing that makes you happy?
+        
+        (The pipe character || should be use in between different questions to separate the questions)
 
         Ensure the questions are intriguing, foster curiosity and contribute to a positive and welcoming conversational environment.`
 
         : 
         
-        `Create a list of three open-ended engaging questions formatted as a singlle string. Each question should be separated by "||". These questions are for an anonymous social messaging platform, like Qooh.me and should be suitable for diverse audience. Avoid personal or sensitive topics, focusing instead on universal theme that engages friendly interaction. for example your output should be structured like this: 
-        "What's a hobby you have recently started? ||
+        `Create a list of three open-ended engaging questions formatted as a single string. Each question should be separated by "||". These questions are for an anonymous social messaging platform, like Qooh.me and should be suitable for diverse audience. Avoid personal or sensitive topics, focusing instead on universal theme that engages friendly interaction. for example your output should be structured like this: 
+        What's a hobby you have recently started? ||
         If you could have any superpower, what would it be? ||
-        What's a simple thing that makes you happy?" ||
+        What's a simple thing that makes you happy?
+
+        (The pipe character || should be use in between different questions to separate the questions)
         
         Ensure the questions are intriguing, foster curiosity and contribute to a positive and welcoming conversational environment.`;
 
-    const { text } = streamText({
-      model: google("gemini-flash-lite"), // Changed model here
+    const response = streamText({
+      model: google("models/gemini-2.5-flash-lite"), 
       prompt,
       temperature: 1,
       maxOutputTokens: 200,
     });
 
-    // Parse the suggestions from the response
-    const suggestions = (await text)
-      .split("||")
-      .map((suggestion) => suggestion.trim());
+    if(!response) {
+      return Response.json({ error: "Failed to generate suggestions due to an error" }, { status: 500 });
+    }
+    
 
-    return Response.json({ suggestions });
+    // // Parse the suggestions from the response
+    // const suggestions = (await text)
+    //   .split("||")
+    //   .map((suggestion) => suggestion.trim());
+
+
+    return response.toUIMessageStreamResponse();
 
   } catch (error) {
     if (error instanceof Error) {
@@ -54,7 +75,6 @@ export async function POST(req: Request) {
       );
 
     } else {
-
       console.error("An unexpected error occurred:", error);
       throw error;
     }

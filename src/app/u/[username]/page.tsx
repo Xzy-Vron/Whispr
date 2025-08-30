@@ -19,6 +19,9 @@ import { messageSchema } from "@/schemas/message";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { ApiResponse } from "@/types/ApiResponse";
+import { useCompletion } from "@ai-sdk/react";
+import { Card, CardContent } from "@/components/ui/card";
+import { LoaderCircle } from "lucide-react";
 
 export default function InputForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +35,22 @@ export default function InputForm() {
     },
   });
 
+  const {
+    completion,
+    complete,
+    isLoading: isSuggesting,
+  } = useCompletion({
+    api: "/api/suggest-messages",
+  });
+  
+  const handleSuggest = async () => {
+    return await complete("", {
+      body: {
+        conversationContext: form.getValues("content"),
+      }
+    });
+  };
+
   async function onSubmit(data: z.infer<typeof messageSchema>) {
     setIsLoading(true);
     try {
@@ -39,6 +58,7 @@ export default function InputForm() {
         username,
         content: data.content,
       });
+
       if (response.data && !response.data.success) {
         toast.error(response.data.message);
       }
@@ -52,7 +72,7 @@ export default function InputForm() {
             </pre>
           ),
         });
-        form.reset({content:""});
+        form.reset({ content: "" });
       }
     } catch (error) {
       console.log(error);
@@ -65,9 +85,14 @@ export default function InputForm() {
     }
   }
 
+  const handleSuggestionClick = (suggestion: string) => {
+    form.setValue("content", suggestion);
+    handleSuggest();
+  };
+
   return (
     <>
-      <div className="flex flex-col items-center justify-start p-10 h-screen">
+      <div className="flex flex-col items-center justify-start p-10">
         <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance mb-10">
           Send Message Link
         </h1>
@@ -81,7 +106,14 @@ export default function InputForm() {
               name="content"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel><h4 className="scroll-m-20 text-xs font-semibold tracking-tight text-muted-foreground">Send Message to <span className="text-lg text-white font-bold">@{username}</span></h4></FormLabel>
+                  <FormLabel>
+                    <h4 className="scroll-m-20 text-xs font-semibold tracking-tight text-muted-foreground">
+                      Send Message to{" "}
+                      <span className="text-lg text-white font-bold">
+                        @{username}
+                      </span>
+                    </h4>
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Type your Message here..."
@@ -103,6 +135,44 @@ export default function InputForm() {
           </form>
         </Form>
       </div>
+      <div className="h-100 w-2/3 ml-80 flex flex-col items-start">
+        <Button className="mb-10 w-40" variant={"outline"} onClick={() => handleSuggest()} disabled={isSuggesting}>
+          {isSuggesting ? "Suggesting..." : "Suggest Messages"}
+        </Button>
+        <Card className="h-80 w-2/3 flex items-center justify-center">
+          {completion ? (
+            completion.split("||").map((suggestion, index) => (
+              <Card
+                key={index}
+                className="h-fit py-4 px-4 w-2/3 flex items-center justify-center cursor-pointer"
+                onClick={() => handleSuggestionClick(suggestion)}
+              >
+                <CardContent className="text-start">
+                  <p>{suggestion}</p>
+                </CardContent>
+              </Card>
+            ))
+          ) :isSuggesting? (
+            <Card className="">
+              <CardContent>
+                <p className="text-center text-foreground-muted ">
+                  <LoaderCircle size={20} className="animate-spin"/>
+                </p>
+              </CardContent>
+            </Card>
+          )
+           :(
+            <Card className="">
+              <CardContent>
+                <p className="text-center text-foreground-muted ">
+                  No suggestions available
+                </p>
+              </CardContent>
+            </Card>
+          )}
+        </Card>
+      </div>
     </>
   );
 }
+
