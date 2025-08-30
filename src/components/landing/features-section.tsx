@@ -55,7 +55,7 @@ export function FeaturesSection() {
   ]
 
   return (
-    <section id="features" className="w-full py-20 md:py-32">
+    <section id="features" className="w-full py-20 lg:pt-5 md:py-32">
       <div className="container px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 60 }}

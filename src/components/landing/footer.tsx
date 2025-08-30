@@ -9,19 +9,21 @@ export function Footer() {
   return (
     <footer className="w-full border-t bg-background/95 backdrop-blur-sm">
       <div
-        className={`container flex flex-col  px-4 md:px-6  ${pathname === "/" && "lg:py-16 gap-8"}`}
+        className={`container pt-4 flex flex-col  px-4 md:px-6  ${pathname === "/" && "lg:py-16 gap-8"}`}
       >
         {pathname === "/" && (
           <>
             <div className="grid gap-8 sm:grid-cols-2">
               <div className="space-y-4">
+                <Link href={"/"}>
                 <div className="flex items-center gap-2 font-bold">
                   <div className="size-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground">
                     W
                   </div>
                   <span>Whispr</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                </Link>
+                <p className="text-sm mt-5 text-muted-foreground">
                   Collect anonymous feedback effortlessly. Share your link,
                   receive honest insights, and stay in control with AI-powered
                   suggestions.

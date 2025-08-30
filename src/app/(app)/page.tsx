@@ -4,7 +4,9 @@ import { FaqSection } from "@/components/landing/faq-section";
 import { CtaSection } from "@/components/landing/cta-section";
 import { HeroSection }from "@/components/landing/hero-section";
 
+
 export default function Home() {
+
   return (
     <>
       <main className="flex-1">

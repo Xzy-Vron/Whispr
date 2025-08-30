@@ -28,8 +28,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <AuthProvider>
-        <body suppressHydrationWarning
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        <body  suppressHydrationWarning
+          className={`${geistSans.variable} ${geistMono.variable} antialiased smooth-scroll`}
         >
           <ThemeProvider
             attribute="class"

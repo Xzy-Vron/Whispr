@@ -10,46 +10,48 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 
-export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+interface HeaderProps {
+  isScrolled: boolean
+  mobileMenuOpen: boolean
+  setMobileMenuOpen: (open: boolean) => void
+  theme: string | undefined
+  setTheme: (theme: string) => void
+  mounted: boolean
+  isLoggedIn: boolean
+  setIsLoggedIn: (loggedIn: boolean) => void
+}
 
-  const pathname = usePathname();
-  const { data: session } = useSession();
+export function Header({  
+  isScrolled,
+  mobileMenuOpen,
+  setMobileMenuOpen,
+  theme,
+  setTheme,
+  mounted,
+  isLoggedIn,
+  setIsLoggedIn,
+}: HeaderProps) {
 
-  const user: User = session?.user;
-
-  useEffect(() => {
-    setMounted(true);
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const pathname = usePathname()
+  const { data: session } = useSession()
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+    setTheme(theme === "dark" ? "light" : "dark")
+  }
 
   return (
     <header
       className={`sticky top-0 z-50 w-full backdrop-blur-lg transition-all duration-300 ${isScrolled ? "bg-background/80 shadow-sm" : "bg-transparent"}`}
     >
       <div className="container w-full flex h-16 items-center justify-between">
+        <Link href="/">
         <div className="flex items-center gap-2 ml-3 font-bold">
           <div className="size-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground">
             W
           </div>
           <span>Whispr</span>
         </div>
+        </Link>
         {pathname === "/" && (
           <nav className="hidden md:flex gap-20">
             <Link
@@ -59,17 +61,17 @@ export function Header() {
               Features
             </Link>
             <Link
-              href="#testimonials"
+              href="#how-it-works"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              Testimonials
+              How It Works
             </Link>
-            <Link
+            {/* <Link
               href="#pricing"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               Pricing
-            </Link>
+            </Link> */}
             <Link
               href="#faq"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
@@ -86,14 +88,18 @@ export function Header() {
             className="rounded-full"
           >
             {mounted && theme === "dark" ? (
-              <Sun className="size-[18px]" />
+              <span className="cursor-pointer">
+                <Sun className="size-[18px]" />
+              </span>
             ) : (
-              <Moon className="size-[18px]" />
+              <span className="cursor-pointer">
+                <Moon className="size-[18px]" />
+              </span>
             )}
             <span className="sr-only">Toggle theme</span>
           </Button>
           {session ? (
-            <Button className="rounded-full" onClick={() => signOut()}>
+            <Button className="rounded-full cursor-pointer" onClick={() => signOut()}>
               Logout
             </Button>
           ) : (
@@ -101,13 +107,13 @@ export function Header() {
               <Link href={"/sign-in"}>
                 <Button
                   variant="ghost"
-                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                  className="text-sm font-medium cursor-pointer text-muted-foreground transition-colors hover:text-foreground"
                 >
                   Log in
                 </Button>
               </Link>
               <Link href={"/sign-up"}>
-                <Button className="rounded-full">
+                <Button className="rounded-full cursor-pointer">
                   Get Started
                   <ChevronRight className="ml-1 size-4" />
                 </Button>
@@ -151,7 +157,7 @@ export function Header() {
           className="md:hidden absolute top-16 inset-x-0 bg-background/95 backdrop-blur-lg border-b"
         >
           <div className="container py-4 flex flex-col gap-4">
-            {/* <Link
+            <Link
               href="#features"
               className="py-2 text-sm font-medium"
               onClick={() => setMobileMenuOpen(false)}
@@ -159,26 +165,26 @@ export function Header() {
               Features
             </Link>
             <Link
-              href="#testimonials"
+              href="#how-it-works"
               className="py-2 text-sm font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Testimonials
+              How It Works
             </Link>
-            <Link
+            {/* <Link
               href="#pricing"
               className="py-2 text-sm font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
               Pricing
-            </Link>
+            </Link> */}
             <Link
               href="#faq"
               className="py-2 text-sm font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
               FAQ
-            </Link> */}
+            </Link>
             <div className="flex flex-col gap-2 pt-2 border-t">
               {session ? (
                 <Button className="rounded-full" onClick={() => signOut()}>

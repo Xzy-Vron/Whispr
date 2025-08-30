@@ -116,7 +116,12 @@ export default function page() {
     <div className="h-screen flex justify-center items-center">
       <Card className="w-full max-w-sm rounded-md ">
         <CardHeader>
-          <CardTitle>Whispr</CardTitle>
+          <CardTitle className="flex items-center mb-1 gap-2">
+              <div className="size-7 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground">
+                W
+              </div>
+              Whispr
+            </CardTitle>
           <CardDescription>Signup to recieve feedbacks</CardDescription>
           <CardAction className="flex flex-col items-end">
             <CardDescription>Already a user?</CardDescription> {''}
@@ -186,7 +191,7 @@ export default function page() {
               />
             </CardContent>
             <CardFooter className="pt-4">
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <Button type="submit" className="w-full cursor-pointer" disabled={isSubmitting}>
                 Sign up
               </Button>
             </CardFooter>
