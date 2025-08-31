@@ -22,6 +22,8 @@ import { ApiResponse } from "@/types/ApiResponse";
 import { useCompletion } from "@ai-sdk/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { LoaderCircle } from "lucide-react";
+import { Footer } from "@/components/landing/footer";
+import { Separator } from "@/components/ui/separator";
 
 export default function InputForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -92,14 +94,16 @@ export default function InputForm() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-start p-10">
+    <div className="h-screen">
+
+      <div className="flex flex-col items-center w-full justify-start px-6 pt-8 ">
         <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance mb-10">
           Send Message Link
         </h1>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-2/3 space-y-6"
+            className="md:w-2/3 w-full space-y-6"
           >
             <FormField
               control={form.control}
@@ -132,28 +136,29 @@ export default function InputForm() {
             <Button className="w-full cursor-pointer" type="submit">
               Submit Message
             </Button>
+            <Separator />
           </form>
         </Form>
       </div>
-      <div className="h-100 w-2/3 ml-80 flex flex-col items-start">
+      <div className="min-h-60 w-full flex flex-col px-2 py-8 items-center">
         <Button className="mb-10 w-40" variant={"outline"} onClick={() => handleSuggest()} disabled={isSuggesting}>
           {isSuggesting ? "Suggesting..." : "Suggest Messages"}
         </Button>
-        <Card className="h-80 w-2/3 flex items-center justify-center">
+        <Card className=" w-full md:w-2/3 px-2 flex items-center justify-center">
           {completion ? (
             completion.split("||").map((suggestion, index) => (
               <Card
                 key={index}
-                className="h-fit py-4 px-4 w-2/3 flex items-center justify-center cursor-pointer"
+                className="h-fit py-4 px-2 w-full flex items-center justify-center cursor-pointer"
                 onClick={() => handleSuggestionClick(suggestion)}
               >
-                <CardContent className="text-start">
+                <CardContent className="text-start px-2">
                   <p>{suggestion}</p>
                 </CardContent>
               </Card>
             ))
           ) :isSuggesting? (
-            <Card className="">
+            <Card className="w-full">
               <CardContent>
                 <p className="text-center text-foreground-muted ">
                   <LoaderCircle size={20} className="animate-spin"/>
@@ -165,13 +170,16 @@ export default function InputForm() {
             <Card className="">
               <CardContent>
                 <p className="text-center text-foreground-muted ">
-                  No suggestions available
+                  Get conversation ideas by clicking on the suggest messages button
                 </p>
               </CardContent>
             </Card>
           )}
         </Card>
       </div>
+    
+      <Footer />
+    </div>
     </>
   );
 }

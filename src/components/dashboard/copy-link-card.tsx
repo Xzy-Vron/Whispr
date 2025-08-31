@@ -12,7 +12,9 @@ interface CopyLinkCardProps {
 export function CopyLinkCard({ messageUrl }: CopyLinkCardProps) {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(messageUrl);
-    toast.success("Copied to clipboard");
+    toast.success("Copied to clipboard", {
+      position: "bottom-right", 
+    });
   };
 
   return (
@@ -20,19 +22,20 @@ export function CopyLinkCard({ messageUrl }: CopyLinkCardProps) {
       <div className="mt-15">
         <div className="scroll-m-20 text-2xl font-semibold tracking-tight">Share Link</div>
         <Separator className="my-2" />
-        <div>
-          <Card className="w-full py-1 rounded-lg flex">
+        <div className="flex justify-between">
+          <Card className="w-fit py-1 rounded-lg flex">
             <CardContent className="flex justify-between items-center">
               <p className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">{messageUrl}</p>
+            </CardContent>
+          </Card>
               <Button
-                variant={"outline"}
-                className="bg-gray-100 text-white dark:bg-neutral-900 bg-blur  rounded"
+                variant={"secondary"}
+                size={"icon"}
+                className="bg-gray-100 dark:text-white border-2 dark:bg-neutral-900 bg-blur py-4 px-6 cursor-pointer hover:bg-gray-200 dark:hover:bg-neutral-800"
                 onClick={copyToClipboard}
               >
                 <Copy className="h-4 w-4" />
               </Button>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </>

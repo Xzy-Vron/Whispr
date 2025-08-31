@@ -61,7 +61,7 @@ export default function MessageCard({
   let formattedDate = formatter.format(new Date(message.createdAt));
 
   return (
-    <Card>
+    <Card className="h-fit">
       <CardHeader>
         <CardTitle>{message.content}</CardTitle>
         <CardAction>

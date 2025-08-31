@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Button } from '../ui/button';
 import { Loader, RefreshCcw } from 'lucide-react';
-import { useRefreshContext } from '@/context/context';
+import { useRefreshContext } from '@/context/useContext';
 
 export default function RefreshButton() {
   
@@ -10,7 +10,6 @@ export default function RefreshButton() {
   return (
     <div>
       <Button
-            className="mt-4"
             variant={"outline"}
             onClick={(e) => {
               e.preventDefault();

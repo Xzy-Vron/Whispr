@@ -3,25 +3,37 @@
 import Link from "next/link";
 import { Linkedin, Twitter, Github } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { Button } from "../ui/button";
 
 export function Footer() {
+  const { data: session } = useSession();
+
+  const username = session?.user?.username;
+
   const pathname = usePathname();
   return (
     <footer className="w-full border-t bg-background/95 backdrop-blur-sm">
-      <div
-        className="container pt-4 flex flex-col  px-4 md:px-6 py-16 gap-8" 
-      >
+      <div className="container  flex flex-col justifiy-center px-4 md:px-6 py-7 gap-5">
+        {pathname === `/u/${username}` && (
+          <div className="container  flex flex-col w-full justify-center items-center px-4 md:px-6 py-1 gap-2">
+            <h1 className="text-center text-muted-foreground text-sm">Don&apos;t have an account ?</h1>
+            <Link href={"/sign-up"}>
+            <Button size={"sm"} className="w-18">Sign up</Button>
+            </Link>
+        </div>
+        )}
         {pathname === "/" && (
           <>
             <div className="grid gap-8 sm:grid-cols-2">
               <div className="space-y-4">
                 <Link href={"/"}>
-                <div className="flex items-center gap-2 font-bold">
-                  <div className="size-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground">
-                    W
+                  <div className="flex items-center gap-2 font-bold">
+                    <div className="size-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground">
+                      W
+                    </div>
+                    <span>Whispr</span>
                   </div>
-                  <span>Whispr</span>
-                </div>
                 </Link>
                 <p className="text-sm mt-5 text-muted-foreground">
                   Collect anonymous feedback effortlessly. Share your link,

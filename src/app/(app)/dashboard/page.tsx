@@ -19,7 +19,7 @@ import MessageCard from "@/components/dashboard/messageCard";
 import { NameCard } from "@/components/dashboard/name-card";
 import { CopyLinkCard } from "@/components/dashboard/copy-link-card";
 import MessageSection from "@/components/dashboard/message-section";
-import { RefreshContext } from "@/context/context";
+import { AcceptMessageContext, RefreshContext } from "@/context/useContext";
 
 export default function page() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -51,6 +51,7 @@ export default function page() {
       } else {
         toast.error("Error accepting messages", {
           description: "Invalid response data",
+          position: "bottom-right"
         });
       }
     } catch (error) {
@@ -60,6 +61,7 @@ export default function page() {
         description:
           axiosError.response?.data.message ||
           "Failed to fetch messages settings",
+        position: "bottom-right"
       });
     } finally {
       setIsSwitchLoading(false);
@@ -81,6 +83,7 @@ export default function page() {
             error: (res) => {
               return res.data.message;
             },
+            position: "bottom-right",
           });
         }
         const response = await promise;
@@ -90,6 +93,7 @@ export default function page() {
         toast.error("Error accepting messages", {
           description:
             axiosError.response?.data.message || "Failed to fetch messages",
+          position: "bottom-right"
         });
       } finally {
         setIsLoading(false);
@@ -111,13 +115,16 @@ export default function page() {
         acceptMessages: !acceptMessages,
       });
       setValue("acceptMessages", !acceptMessages);
-      toast.success(response.data.message);
+      toast.success(response.data.message, {
+        position: "bottom-right",
+      });
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       console.log("Error response:", axiosError.response);
       toast.error("Error accepting messages", {
         description:
           axiosError.response?.data.message || "Failed to accept messages",
+        position: "bottom-right",
       });
     }
   };
@@ -139,19 +146,20 @@ export default function page() {
   }
   return (
     <>
-      <div className="px-4 mx-20 py-8 md:px-8 lg:px-12">
+      <div className="px-4 py-8 md:px-8 lg:px-12">
+
         <NameCard username={username} messageAcceptance={acceptMessages} />
 
         <CopyLinkCard messageUrl={profileMessageUrl} />
+
         <RefreshContext.Provider value={{ fetchMessage, isLoading }}>
+        <AcceptMessageContext.Provider value={{ register, acceptMessages, handleSwitchChange, isSwitchLoading }}>
+
           <MessageSection
             messages={messages}
             handleDeleteMessage={handleDeleteMessage}
-            register={register}
-            acceptMessages={acceptMessages}
-            handleSwitchChange={handleSwitchChange}
-            isSwitchLoading={isSwitchLoading}
           />
+        </AcceptMessageContext.Provider>
         </RefreshContext.Provider>
       </div>
     </>
