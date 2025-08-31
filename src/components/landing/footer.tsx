@@ -9,7 +9,7 @@ export function Footer() {
   return (
     <footer className="w-full border-t bg-background/95 backdrop-blur-sm">
       <div
-        className={`container pt-4 flex flex-col  px-4 md:px-6  ${pathname === "/" && "lg:py-16 gap-8"}`}
+        className="container pt-4 flex flex-col  px-4 md:px-6 py-16 gap-8" 
       >
         {pathname === "/" && (
           <>

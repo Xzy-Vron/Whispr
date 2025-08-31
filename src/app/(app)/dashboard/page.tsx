@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { acceptMessageSchema } from "@/schemas/acceptMessage";
 import * as z from "zod";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 import { toast } from "sonner";
 import { User } from "next-auth";
@@ -15,7 +15,10 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Copy, Loader, RefreshCcw } from "lucide-react";
-import MessageCard from "@/components/myComponents/messageCard";
+import MessageCard from "@/components/dashboard/messageCard";
+import { NameCard } from "@/components/dashboard/name-card";
+import { CopyLinkCard } from "@/components/dashboard/copy-link-card";
+import MessageSection from "@/components/dashboard/message-section";
 
 export default function page() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -81,7 +84,6 @@ export default function page() {
         }
         const response = await promise;
         setMessages(response.data.messages || []);
-
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>;
         toast.error("Error accepting messages", {
@@ -102,17 +104,16 @@ export default function page() {
     fetchAcceptMessage();
   }, [session, setValue, fetchAcceptMessage, fetchMessage]);
 
-  const handleSwitchChange = async () => {
+  const handleSwitchChange = async (): Promise<void> => {
     try {
       const response = await axios.post<ApiResponse>("/api/accept-messages", {
         acceptMessages: !acceptMessages,
       });
       setValue("acceptMessages", !acceptMessages);
       toast.success(response.data.message);
-      
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
-      console.log('Error response:', axiosError.response);
+      console.log("Error response:", axiosError.response);
       toast.error("Error accepting messages", {
         description:
           axiosError.response?.data.message || "Failed to accept messages",
@@ -128,11 +129,6 @@ export default function page() {
 
   const profileMessageUrl = `${baseUrl}/u/${username}`;
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(profileMessageUrl);
-    toast.success("Copied to clipboard");
-  };
-
   if (!session || !session?.user) {
     return (
       <div>
@@ -140,71 +136,24 @@ export default function page() {
       </div>
     );
   }
-    return (
+  return (
     <>
-    <div className="px-4 py-8 md:px-8 lg:px-12">
-    <div className="my-8 md:mx-8 lg:mx-auto p-6 bg-white dark:bg-neutral-900 rounded w-full max-  h-20px">
-      <h1 className="text-4xl font-bold mb-4">Hello, {username} </h1>
-    </div>
+      <div className="px-4 mx-20 py-8 md:px-8 lg:px-12">
+        <NameCard username={username} messageAcceptance={acceptMessages} />
 
-    <div className="mb-4">
-      <h2 className="text-lg font-semibold mb-2">Copy Your Unique Link</h2>{" "}
-      <div className="flex items-center  dark:bg-neutral-800 rounded">
-        <input type="text" value={profileMessageUrl} className="input input-bordered w-full p-2 mr-2" readOnly={true}/>
-        {/* flex-grow border border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:border-blue-500 */}
-        <Button
-          variant={"outline"}
-          className="bg-gray-100 text-white dark:bg-neutral-900 bg-blur px-4 py-2 rounded"
-          onClick={copyToClipboard}
-        >
-          <Copy className="h-4 w-4" />
-        </Button>
-      </div>
-    </div>
+        <CopyLinkCard messageUrl={profileMessageUrl} />
 
-    <div className="mb-4">
-      <Switch
-        {...register("acceptMessages")}
-        checked={acceptMessages}
-        onCheckedChange={handleSwitchChange}
-        disabled={isSwitchLoading}
-      />
-      <span className="ml-2">
-        Accept Messages : 
-        {acceptMessages ? " ON" : " OFF"}
-      </span>
-    </div>
-
-    <Separator />
-
-    <Button
-    className="mt-4"
-    variant={"outline"}
-    onClick={(e) => {
-      e.preventDefault();
-      fetchMessage(true)}}
-    >
-      {isLoading? (
-        <Loader className=" h-4 w-4 animate-spin" />
-      ): (
-        <RefreshCcw className=" h-4 w-4" />
-      )}
-    </Button>
-    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-      {
-      messages.length > 0 ? 
-        messages.map((message, index) => (
-        <MessageCard 
-        key={(message as {_id : string})._id.toString()}
-        message={message} 
-        onMessageDelete={handleDeleteMessage} 
+        <MessageSection
+          messages={messages}
+          handleDeleteMessage={handleDeleteMessage}
+          register={register}
+          acceptMessages={acceptMessages}
+          handleSwitchChange={handleSwitchChange}
+          isSwitchLoading={isSwitchLoading}
+          fetchMessage={fetchMessage}
+          isLoading={isLoading}
         />
-      )): (
-        <p>No messages</p>
-      )}
-    </div>
-    </div>
+      </div>
     </>
-    );
+  );
 }
