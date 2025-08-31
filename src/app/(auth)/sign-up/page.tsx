@@ -113,7 +113,7 @@ export default function page() {
 
   return (
     <>
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-screen px-4 flex justify-center items-center">
       <Card className="w-full max-w-sm rounded-md ">
         <CardHeader>
           <CardTitle className="flex items-center mb-1 gap-2">

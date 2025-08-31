@@ -9,15 +9,15 @@ export default function MessageSwitch() {
   const { register, acceptMessages, handleSwitchChange, isSwitchLoading } = useAcceptMessageContext();
 
   return (
-    <Card className="flex-row w-25 py-2 gap-1 rounded-sm px-4">
+    <Card className="flex-row w-25 py-2 gap-3 rounded-sm px-4">
       <Switch
-        className="mt-0.5"
+        className="mt-0.5 cursor-pointer"
         {...register("acceptMessages")}
         checked={acceptMessages}
         onCheckedChange={handleSwitchChange}
         disabled={isSwitchLoading}
       />
-      <span className="leading-none font-medium flex items-center text-sm">
+      <span className="leading-none font-medium flex items-center pt-0.5 text-sm">
         {acceptMessages ? " ON" : " OFF"}
       </span>
     </Card>

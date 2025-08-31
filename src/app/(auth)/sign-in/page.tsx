@@ -46,25 +46,25 @@ export default function page() {
   });
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
-    const result = await signIn("credentials", {
+    const promise =  signIn("credentials", {
       redirect: false,
       identifier: data.identifier,
       password: data.password,
     });
 
-    if (result?.error) {
-      toast.error("Login Failed", {
-        position: "top-center",
-        description: "Incorrect username or password",
-      });
-    }
+    toast.promise(promise, {
+      loading: "Signing in...",
+      success: (res) => {
+        return "Signed in successfully";
+      },
+      error: (res) => {
+        return "Error signing in";
+      },
+    });
+
+    const result = await promise;
 
     if (result?.url) {
-      toast.success("Login successful!", {
-        position: "top-right",
-        description: "Redirecting to dashboard page...",
-      });
-
       setTimeout(() => {
         router.replace("/dashboard");
       });
@@ -73,7 +73,7 @@ export default function page() {
 
   return (
     <>
-      <div className="h-screen flex justify-center items-center">
+      <div className="h-screen px-4 flex justify-center items-center">
         <Card className="w-full max-w-sm rounded-md ">
           <CardHeader>
             <CardTitle className="flex items-center mb-1 gap-2">

@@ -159,14 +159,14 @@ export function Header({
           <div className="container py-4 flex flex-col gap-4">
             <Link
               href="#features"
-              className="py-2 text-sm font-medium"
+              className="py-2 px-2 text-sm font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
               Features
             </Link>
             <Link
               href="#how-it-works"
-              className="py-2 text-sm font-medium"
+              className="py-2 px-2 text-sm font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
               How It Works
@@ -180,12 +180,12 @@ export function Header({
             </Link> */}
             <Link
               href="#faq"
-              className="py-2 text-sm font-medium"
+              className="py-2 px-2 text-sm font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
               FAQ
             </Link>
-            <div className="flex flex-col gap-2 pt-2 border-t">
+            <div className="flex flex-col px-2 gap-2 pt-2 border-t">
               {session ? (
                 <Button className="rounded-full" onClick={() => signOut()}>
                   Logout

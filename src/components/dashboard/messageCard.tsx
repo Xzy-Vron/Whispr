@@ -67,7 +67,7 @@ export default function MessageCard({
         <CardAction>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="destructive">
+              <Button className="cursor-pointer" variant="destructive">
                 <MailX size={15} />
               </Button>
             </AlertDialogTrigger>

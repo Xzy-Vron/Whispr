@@ -15,6 +15,7 @@ export default function RefreshButton() {
               e.preventDefault();
               fetchMessage(true);
             }}
+            className='cursor-pointer'
           >
             {isLoading ? (
               <Loader className=" h-4 w-4 animate-spin" />

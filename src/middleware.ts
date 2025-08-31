@@ -13,8 +13,7 @@ export async function middleware(request: NextRequest) {
     if (
       url.pathname.startsWith("/sign-in") ||
       url.pathname.startsWith("/verify") ||
-      url.pathname.startsWith("/sign-up") ||
-      url.pathname === "/"
+      url.pathname.startsWith("/sign-up")
     ) {
       console.log(
         "Authenticated user accessing auth page, redirecting to dashboard"
@@ -32,7 +31,7 @@ export async function middleware(request: NextRequest) {
       console.log(
         "Unauthenticated user accessing dashboard, redirecting to sign-in"
       );
-      return NextResponse.redirect(new URL("/sign-in", request.url));
+      return NextResponse.redirect(new URL("/", request.url));
     }
     // Allow access to auth pages and home page
     return NextResponse.next();
