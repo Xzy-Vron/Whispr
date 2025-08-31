@@ -19,6 +19,7 @@ import MessageCard from "@/components/dashboard/messageCard";
 import { NameCard } from "@/components/dashboard/name-card";
 import { CopyLinkCard } from "@/components/dashboard/copy-link-card";
 import MessageSection from "@/components/dashboard/message-section";
+import { RefreshContext } from "@/context/context";
 
 export default function page() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -142,17 +143,16 @@ export default function page() {
         <NameCard username={username} messageAcceptance={acceptMessages} />
 
         <CopyLinkCard messageUrl={profileMessageUrl} />
-
-        <MessageSection
-          messages={messages}
-          handleDeleteMessage={handleDeleteMessage}
-          register={register}
-          acceptMessages={acceptMessages}
-          handleSwitchChange={handleSwitchChange}
-          isSwitchLoading={isSwitchLoading}
-          fetchMessage={fetchMessage}
-          isLoading={isLoading}
-        />
+        <RefreshContext.Provider value={{ fetchMessage, isLoading }}>
+          <MessageSection
+            messages={messages}
+            handleDeleteMessage={handleDeleteMessage}
+            register={register}
+            acceptMessages={acceptMessages}
+            handleSwitchChange={handleSwitchChange}
+            isSwitchLoading={isSwitchLoading}
+          />
+        </RefreshContext.Provider>
       </div>
     </>
   );

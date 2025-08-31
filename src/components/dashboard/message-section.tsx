@@ -6,9 +6,7 @@ import { Switch } from "@/components/ui/switch";
 import { UseFormRegister } from "react-hook-form";
 import z from "zod";
 import { acceptMessageSchema } from "@/schemas/acceptMessage";
-import { Button } from "../ui/button";
-import { Loader, RefreshCcw } from "lucide-react";
-import { boolean } from "zod/v4";
+import RefreshButton from "./refresh-button";
 
 interface MessageSectionProps {
   messages: Message[];
@@ -17,8 +15,6 @@ interface MessageSectionProps {
   acceptMessages: boolean;
   handleSwitchChange: () => Promise<void>;
   isSwitchLoading: boolean;
-  fetchMessage: (refresh?: boolean) => Promise<void>;
-  isLoading: boolean;
 }
 
 export default function MessageSection({
@@ -28,10 +24,8 @@ export default function MessageSection({
   acceptMessages,
   handleSwitchChange,
   isSwitchLoading,
-  fetchMessage,
-  isLoading
-  
 }: MessageSectionProps) {
+  
   return (
     <>
       <div className="mt-15">
@@ -39,20 +33,7 @@ export default function MessageSection({
           <div className="scroll-m-20 text-2xl font-semibold tracking-tight">
             Feedbacks
           </div>
-          <Button
-            className="mt-4"
-            variant={"outline"}
-            onClick={(e) => {
-              e.preventDefault();
-              fetchMessage(true);
-            }}
-          >
-            {isLoading ? (
-              <Loader className=" h-4 w-4 animate-spin" />
-            ) : (
-              <RefreshCcw className=" h-4 w-4" />
-            )}
-          </Button>
+         <RefreshButton />
           <div className="mb-4">
             <Switch
               {...register("acceptMessages")}
