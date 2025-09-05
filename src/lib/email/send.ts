@@ -1,5 +1,5 @@
 import  EmailTemplate  from "./template";
-import { EmailResponse } from "@/types/emailResponse";
+import { ApiResponse } from "@/types/ApiResponse";
 import resend from "./resend";
 
 
@@ -8,7 +8,7 @@ export async function sendEmail (
     email : string,
     username : string,
     verifyCode : string
-) : Promise<EmailResponse> {
+) : Promise<ApiResponse> {
     try {
         await resend.emails.send({
           from: "onboarding@resend.dev",
