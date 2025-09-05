@@ -3,11 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import dbconnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
-
-interface Credentials {
-  identifier: string;
-  password: string;
-}
+import type { User as NextAuthUser } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -21,8 +17,8 @@ export const authOptions: NextAuthOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials): Promise<any> {
-        
+      async authorize(credentials: Record<"identifier" | "password", string> | undefined): Promise<NextAuthUser | null> {
+
         if (!credentials?.identifier || !credentials?.password) {
           throw new Error("Missing credentials");
         }
@@ -48,7 +44,7 @@ export const authOptions: NextAuthOptions = {
             user.password
           );
           if (isPasswordCorrect) {
-            return user;
+            return user as NextAuthUser;
           } else {
             throw new Error("Incorrect Password");
           }
