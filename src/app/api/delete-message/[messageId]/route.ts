@@ -5,9 +5,14 @@ import { authOptions } from "../../auth/[...nextauth]/options";
 import { User as NextAuthUser } from "next-auth";
 import mongoose from "mongoose";
 
+type RouteContext = {
+  params: {
+    messageId: string;
+  };
+};
+
 export async function DELETE(
-  request: Request,
-  {params} : { params: { messageId: string } }
+  {params} : RouteContext 
 ): Promise<Response> {
   await dbconnect();
 
