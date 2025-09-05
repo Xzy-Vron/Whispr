@@ -26,7 +26,7 @@ import axios from "axios";
 
 type messageCardProps = {
   message: Message;
-  onMessageDelete: (messageId: unknown) => void;
+  onMessageDelete: (messageId: string) => void;
 };
 
 export default function MessageCard({
@@ -44,7 +44,7 @@ export default function MessageCard({
         return res.data.message;
       },
     });
-    onMessageDelete(message._id);
+    onMessageDelete(JSON.stringify(message._id));
   };
 
   const options  = {

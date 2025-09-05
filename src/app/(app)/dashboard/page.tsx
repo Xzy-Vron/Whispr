@@ -21,7 +21,7 @@ export default function Page() {
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
   const [baseUrl, setBaseUrl] = useState("");
 
-  const handleDeleteMessage = (messageId: unknown) => {
+  const handleDeleteMessage = (messageId: string) => {
     setMessages(
       messages.filter((message: Message) => message._id !== messageId)
     );
