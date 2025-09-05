@@ -85,9 +85,11 @@ export function Footer() {
           <div className="flex flex-col items-center gap-3">
             <p className="text-sm text-muted-foreground">
               Made with ♡ by{" "}
-              <span className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer font-bold">
+              <Link href="https://avinash-orcin.vercel.app/">
+              <span className="md:text-muted-foreground md:hover:text-foreground text-foreground transition-colors cursor-pointer font-bold">
                 Avinash Ganore
               </span>
+              </Link>
             </p>
             <div className="flex gap-4">
               <Link
