@@ -44,7 +44,7 @@ export function Header({
           <div className="size-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground">
             W
           </div>
-          <span>Whispr</span>
+          <span>Whispr. </span>
         </div>
         </Link>
         {pathname === "/" && (
