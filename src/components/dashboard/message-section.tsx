@@ -7,7 +7,7 @@ import MessageSwitch from "./message-switch";
 
 interface MessageSectionProps {
   messages: Message[];
-  handleDeleteMessage: (messageId : unknown ) => void;
+  handleDeleteMessage: (messageId : string ) => void;
 }
 
 export default function MessageSection({
