@@ -1,22 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useDebouncedCallback } from "use-debounce";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { signUpSchema } from "@/schemas/signUp";
-import axios, { AxiosError } from "axios";
-import { ApiResponse } from "@/types/ApiResponse";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -34,7 +28,7 @@ import {
 import { signInSchema } from "@/schemas/signIn";
 import { signIn } from "next-auth/react";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof signInSchema>>({
@@ -54,10 +48,10 @@ export default function page() {
 
     toast.promise(promise, {
       loading: "Signing in...",
-      success: (res) => {
+      success: () => {
         return "Signed in successfully";
       },
-      error: (res) => {
+      error: () => {
         return "Error signing in";
       },
     });

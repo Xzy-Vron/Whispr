@@ -7,27 +7,21 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { acceptMessageSchema } from "@/schemas/acceptMessage";
 import * as z from "zod";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 import { toast } from "sonner";
-import { User } from "next-auth";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
-import { Copy, Loader, RefreshCcw } from "lucide-react";
-import MessageCard from "@/components/dashboard/messageCard";
 import { NameCard } from "@/components/dashboard/name-card";
 import { CopyLinkCard } from "@/components/dashboard/copy-link-card";
 import MessageSection from "@/components/dashboard/message-section";
 import { AcceptMessageContext, RefreshContext } from "@/context/useContext";
 
-export default function page() {
+export default function Page() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
   const [baseUrl, setBaseUrl] = useState("");
 
-  const handleDeleteMessage = (messageId: string) => {
+  const handleDeleteMessage = (messageId: unknown) => {
     setMessages(
       messages.filter((message: Message) => message._id !== messageId)
     );

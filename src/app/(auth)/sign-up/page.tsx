@@ -33,7 +33,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function page() {
+export default function Page() {
   const [username, setUsername] = useState("");
   const [usernameMessage, setUsernameMessage] = useState("");
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
@@ -62,7 +62,7 @@ export default function page() {
             `/api/check-valid-username?username=${username}`
           );
           setUsernameMessage(response.data.message);
-        } catch (error: any) {
+        } catch (error) {
           const axiosError = error as AxiosError<ApiResponse>;
           setUsernameMessage(
             axiosError.response?.data.message ?? "Error checking username"
@@ -91,7 +91,7 @@ export default function page() {
         },
       });
 
-      const response = promise.then((res) => {
+      promise.then((res) => {
         return res.data;
       });
 

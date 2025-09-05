@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent } from "../ui/card";
 import { toast } from "sonner";
 import { Copy } from "lucide-react";
 import { Button } from "../ui/button";

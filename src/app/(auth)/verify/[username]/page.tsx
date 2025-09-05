@@ -1,19 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useDebouncedCallback } from "use-debounce";
 import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
 import { verifySchema } from "@/schemas/verify";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Loader } from "lucide-react";
 import {
   InputOTP,
   InputOTPGroup,
@@ -31,15 +26,13 @@ import {
 } from "@/components/ui/form";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
   const params = useParams<{ username: string }>();
 
@@ -54,7 +47,7 @@ export default function page() {
         code: data.code,
       });
 
-      const response = toast.promise(promise, {
+      toast.promise(promise, {
         loading: "Verifying code...",
         success: (response) => response.data.message,
         error: (response) => response.data.message,

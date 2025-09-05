@@ -1,13 +1,10 @@
 "use client";
-import React, { use } from "react";
+import React from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { User } from "next-auth";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronRight, Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 
 interface HeaderProps {
@@ -27,9 +24,7 @@ export function Header({
   setMobileMenuOpen,
   theme,
   setTheme,
-  mounted,
-  isLoggedIn,
-  setIsLoggedIn,
+  mounted
 }: HeaderProps) {
 
   const pathname = usePathname()

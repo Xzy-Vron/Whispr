@@ -26,7 +26,7 @@ import axios from "axios";
 
 type messageCardProps = {
   message: Message;
-  onMessageDelete: (messageId: any) => void;
+  onMessageDelete: (messageId: unknown) => void;
 };
 
 export default function MessageCard({
@@ -58,7 +58,7 @@ export default function MessageCard({
   } as const;
 
   const formatter = new Intl.DateTimeFormat("en-GB", options);
-  let formattedDate = formatter.format(new Date(message.createdAt));
+  const formattedDate = formatter.format(new Date(message.createdAt));
 
   return (
     <Card className="h-fit">

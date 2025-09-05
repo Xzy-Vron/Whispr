@@ -24,7 +24,7 @@ export function DemoSection() {
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Simple, Transparent Pricing</h2>
           <p className="max-w-[800px] text-muted-foreground md:text-lg">
-            Choose the plan that's right for your business. All plans include a 14-day free trial.
+            Choose the plan that&apos;s right for your business. All plans include a 14-day free trial.
           </p>
         </motion.div>
 

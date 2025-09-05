@@ -7,7 +7,7 @@ import MessageSwitch from "./message-switch";
 
 interface MessageSectionProps {
   messages: Message[];
-  handleDeleteMessage: (messageId: any) => void;
+  handleDeleteMessage: (messageId : unknown ) => void;
 }
 
 export default function MessageSection({
@@ -30,7 +30,7 @@ export default function MessageSection({
         <Separator className="my-2" />
         <div className="mt-6 min-h-44 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {messages.length > 0 ? (
-            messages.map((message, index) => (
+            messages.map((message) => (
               <MessageCard
                 key={(message as { _id: string })._id.toString()}
                 message={message}

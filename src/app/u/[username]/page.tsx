@@ -133,7 +133,7 @@ export default function InputForm() {
                 </FormItem>
               )}
             />
-            <Button className="w-full cursor-pointer" type="submit">
+            <Button disabled={isLoading} className="w-full cursor-pointer" type="submit">
               Submit Message
             </Button>
             <Separator />

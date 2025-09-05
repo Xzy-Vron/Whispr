@@ -95,21 +95,21 @@ export function Footer() {
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Linkedin className="size-5" />
-                <span className="sr-only">Avinash's LinkedIn</span>
+                <span className="sr-only">Avinash&apos;s LinkedIn</span>
               </Link>
               <Link
                 href="https://x.com/XzyVron"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Twitter className="size-5" />
-                <span className="sr-only">Avinash's Twitter</span>
+                <span className="sr-only">Avinash&apos;s Twitter</span>
               </Link>
               <Link
                 href="https://github.com/Xzy-Vron"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Github className="size-5" />
-                <span className="sr-only">Avinash's GitHub</span>
+                <span className="sr-only">Avinash&apos;s GitHub</span>
               </Link>
             </div>
           </div>
