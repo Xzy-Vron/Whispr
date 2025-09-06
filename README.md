@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Whispr. 
 
-First, run the development server:
+A web application that allows users to share honest and anonymous feedback without revealing their identity. The goal of this project is to create a safe environment for open communication, whether in workplaces, colleges, or communities.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Features
+- 🔒 User Authentication (Signup & Login)
+- 📨 Send Anonymous Feedback securely
+- 📧 Recieve feedbacks at one place by sharing a Link
+- 📊 Dashboard to view all feedback
+- Real-time AI message suggestion based on the context of your message
+- Toggle to open or close receiving messages
+## Demo
+[Link to the website](https://whispr-tau.vercel.app/)  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![App Screenshot](/public/home.png)
+![App Screenshot](/public/dashboard.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+## Tech Stack
+**Client:**[![My Skills](https://skillicons.dev/icons?i=nextjs,react,tailwindcss,&perline=11)](https://skillicons.dev)
+**Server:** [![My Skills](https://skillicons.dev/icons?i=nodejs,nextjs,,&perline=11)](https://skillicons.dev) 
+**Database:** [![My Skills](https://skillicons.dev/icons?i=mongodb,,&perline=11)](https://skillicons.dev)  
+
+## Feedback
+
+If you have any feedback, please reach out at avinashganore@gmail.com
+
+
+![Logo](/public/android-chrome-192x192.png)
+
