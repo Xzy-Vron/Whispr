@@ -14,6 +14,7 @@ import { NameCard } from "@/components/dashboard/name-card";
 import { CopyLinkCard } from "@/components/dashboard/copy-link-card";
 import MessageSection from "@/components/dashboard/message-section";
 import { AcceptMessageContext, RefreshContext } from "@/context/useContext";
+import { DashboardSkeleton } from "@/components/dashboard/skeleton/dashboard-skeleton";
 
 export default function Page() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -23,7 +24,7 @@ export default function Page() {
 
   const handleDeleteMessage = (messageId: string) => {
     setMessages(
-      messages.filter((message: Message) => message._id !== messageId)
+      messages.filter((message: Message) => JSON.stringify(message._id) !== messageId)
     );
   };
   const { data: session } = useSession();
@@ -131,13 +132,9 @@ export default function Page() {
 
   const profileMessageUrl = `${baseUrl}/u/${username}`;
 
-  if (!session || !session?.user) {
-    return (
-      <div>
-        <h1>Not authenticated</h1>
-      </div>
-    );
-  }
+        
+  if (!session || !session?.user) return <DashboardSkeleton />
+
   return (
     <>
       <div className="px-4 py-8 md:px-8 lg:px-12">
