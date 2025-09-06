@@ -86,7 +86,7 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">
               Made with ♡ by{" "}
               <Link href="https://avinash-orcin.vercel.app/">
-              <span className="md:text-muted-foreground md:hover:text-foreground text-foreground transition-colors cursor-pointer font-bold">
+              <span className="md:text-muted-foreground md:hover:text-foreground text-foreground underline transition-colors cursor-pointer font-bold">
                 Avinash Ganore
               </span>
               </Link>

@@ -44,6 +44,7 @@ export default function MessageCard({
         return res.data.message;
       },
     });
+    await promise;
     onMessageDelete(JSON.stringify(message._id));
   };
 
@@ -63,7 +64,7 @@ export default function MessageCard({
   return (
     <Card className="h-fit">
       <CardHeader>
-        <CardTitle>{message.content}</CardTitle>
+        <CardTitle className="break-words overflow-hidden text-pretty leading-relaxed">{message.content}</CardTitle>
         <CardAction>
           <AlertDialog>
             <AlertDialogTrigger asChild>

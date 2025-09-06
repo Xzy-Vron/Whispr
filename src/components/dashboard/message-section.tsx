@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Message } from "@/models/User";
 import React from "react";
-import MessageCard from "./messageCard";
+import MessageCard from "./message-card";
 import RefreshButton from "./refresh-button";
 import MessageSwitch from "./message-switch";
 

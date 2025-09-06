@@ -67,12 +67,12 @@ export default function InputForm() {
       if (response.data && response.data.success) {
         toast(response.data.message, {
           description: (
-            <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
+            <pre className="mt-2 w-[320px] break-words overflow-hidden text-pretty rounded-md bg-neutral-950 p-4">
               <code className="text-white">
                 {JSON.stringify(data.content, null, 2)}
               </code>
             </pre>
-          ),
+          ),  
         });
         form.reset({ content: "" });
       }
