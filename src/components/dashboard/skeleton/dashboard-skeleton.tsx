@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Sun, Moon, Copy, RotateCcw } from "lucide-react"
+import { Card, CardHeader } from "@/components/ui/card"
+import { Copy, RotateCcw } from "lucide-react"
 import MessageCardSkeleton from "./message-card-skeleton"
 
 export function DashboardSkeleton() {
