@@ -18,7 +18,7 @@ export function Footer() {
         {pathname === `/u/${username}` && (
           <div className="container  flex flex-col w-full justify-center items-center px-4 md:px-6 py-1 gap-2">
             <h1 className="text-center text-muted-foreground text-sm">Don&apos;t have an account ?</h1>
-            <Link href={"/sign-up"}>
+            <Link className="cursor-pointer" href={"/sign-up"}>
             <Button size={"sm"} className="w-18">Sign up</Button>
             </Link>
         </div>

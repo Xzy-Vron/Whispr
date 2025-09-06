@@ -141,7 +141,7 @@ export default function InputForm() {
         </Form>
       </div>
       <div className="min-h-60 w-full flex flex-col px-2 py-8 items-center">
-        <Button className="mb-10 w-40" variant={"outline"} onClick={() => handleSuggest()} disabled={isSuggesting}>
+        <Button className="mb-10 w-40 cursor-pointer" variant={"outline"} onClick={() => handleSuggest()} disabled={isSuggesting}>
           {isSuggesting ? "Suggesting..." : "Suggest Messages"}
         </Button>
         <Card className=" w-full md:w-2/3 px-2 flex items-center justify-center">
